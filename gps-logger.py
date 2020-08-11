@@ -1,7 +1,7 @@
 import serial
-import time
 import string
 import pynmea2
+from datetime import datetime
 
 AVG_RATE = 4
 
@@ -13,8 +13,9 @@ ser = serial.Serial(PORT, baudrate=9600, timeout=0.5)
 lat_buffer = []
 lon_buffer = []
 
-# Generate file name based on unix time  when started
-FILE_NAME = "gps-" + str(time.time()) + ".txt"
+# Generate file or clean if already exists
+FILE_NAME = "gps_log.txt"
+open(FILE_NAME, "w").close()
 
 while True:
 	# Read data
@@ -41,7 +42,7 @@ while True:
 
 			# Write the data to a file
 			with open(FILE_NAME, "a+") as file:
-				file.write(str(time.time()))
+				file.write(datetime.now().isoformat().split(".")[0])
 				file.write("\n")
 				file.write(".".join(lat))
 				file.write("\n")
