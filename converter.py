@@ -6,13 +6,15 @@ lons = []
 # Place all of the file data into the arrays
 with open('gps_log.txt', 'r') as file:
     # Iterate through every line and append to correct array
+    count = 0
     for index, line in enumerate(file):
-	if index%3 == 0:
+	if count == 0:
 		times.append(line.strip("\n"))
-	elif index%2 == 0:
+	elif count == 1:
 		lats.append(line.strip("\n"))
 	else:
 		lons.append(line.strip("\n"))
+	count = (count+1)%3
 
 # Header info
 gpx_file = '<?xml version="1.0" encoding="UTF-8"?>\n'
