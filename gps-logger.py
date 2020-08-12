@@ -3,11 +3,9 @@ import string
 import pynmea2
 from datetime import datetime
 
+# Data handling constants
 AVG_RATE = 4
-
-# Connect to the GPS unit
-PORT = "/dev/ttyAMA0"
-ser = serial.Serial(PORT, baudrate=9600, timeout=0.5)
+PRECISION = 7
 
 # Buffers for storing lat and lon
 lat_buffer = []
@@ -16,6 +14,10 @@ lon_buffer = []
 # Generate file or clean if already exists
 FILE_NAME = "gps_log.txt"
 open(FILE_NAME, "w").close()
+
+# Connect to the GPS unit
+PORT = "/dev/ttyAMA0"
+ser = serial.Serial(PORT, baudrate=9600, timeout=0.5)
 
 while True:
 	# Read data
@@ -37,9 +39,9 @@ while True:
 			lat = str(sum(lat_buffer)/AVG_RATE).split(".")
 			lon = str(sum(lon_buffer)/AVG_RATE).split(".")
 
-			# Round the lat and lng to 5 decimal places
-			lat[1] = lat[1][:7]
-			lon[1] = lon[1][:7]
+			# Round the lat and lng to the required precision
+			lat[1] = lat[1][:PRECISION]
+			lon[1] = lon[1][:PRECISION]
 
 			# Write the data to a file
 			with open(FILE_NAME, "a+") as file:
