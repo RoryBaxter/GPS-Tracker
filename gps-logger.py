@@ -26,9 +26,10 @@ while True:
 	if newdata[0:6] == "$GPRMC":
 		newmsg = pynmea2.parse(newdata)
 
-		# Load new values into a buffer
-		lat_buffer.append(newmsg.latitude)
-		lon_buffer.append(newmsg.longitude)
+		# Load new values into a buffer if they are non-zero
+		if newmsg.latitude != 0:
+			lat_buffer.append(newmsg.latitude)
+			lon_buffer.append(newmsg.longitude)
 
 		#Once the buffer is full, sum then averager then clear
 		if len(lat_buffer) == AVG_RATE:
@@ -37,8 +38,8 @@ while True:
 			lon = str(sum(lon_buffer)/AVG_RATE).split(".")
 
 			# Round the lat and lng to 5 decimal places
-			lat[1] = lat[1][:5]
-			lon[1] = lon[1][:5]
+			lat[1] = lat[1][:7]
+			lon[1] = lon[1][:7]
 
 			# Write the data to a file
 			with open(FILE_NAME, "a+") as file:
