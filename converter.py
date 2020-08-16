@@ -26,8 +26,8 @@ gpx_file += ' </metadata>\n'
 
 # Header for the trek segment
 gpx_file += ' <trk>\n'
-gpx_file += '  <name>Lemsford Anticlockwise GPS test</name>\n'
-gpx_file += '  <type>10</type>\n'
+#gpx_file += '  <name>Lemsford Anticlockwise GPS test</name>\n'
+#gpx_file += '  <type>10</type>\n'
 gpx_file += '  <trkseg>\n'
 # Adding all the points
 for i in range(len(times)):
@@ -37,7 +37,7 @@ for i in range(len(times)):
     gpx_file += '   </trkpt>\n'
 #Footer for trek segment
 gpx_file += '  </trkseg>\n'
-gpx_file += ' <trk>\n'
+gpx_file += ' </trk>\n'
 gpx_file += '</gpx>'
 
 with open('gps_log.gpx', 'w+') as file:
